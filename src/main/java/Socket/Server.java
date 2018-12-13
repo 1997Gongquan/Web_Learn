@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Server {
     ServerSocket serverSocket;
@@ -20,12 +21,13 @@ public class Server {
     public void convertSocket() throws IOException, ClassNotFoundException {
         ObjectInputStream stream=new ObjectInputStream(socket.getInputStream());
         obj=stream.readObject();
-        System.out.println(obj);
+        System.out.println("服务器"+Thread.currentThread().getName()+"收到数据："+obj);
     }
 
-    public void convertToSocket(Object obj) throws IOException {
-        ObjectOutputStream stream=new ObjectOutputStream(socket.getOutputStream());
-        stream.writeObject(obj);
+    public void convertToSocket(Object obj) throws IOException, InterruptedException {
+            ObjectOutputStream stream=new ObjectOutputStream(socket.getOutputStream());
+            stream.writeObject(obj);
+            System.out.println("服务器"+Thread.currentThread().getName()+"发出数据："+obj);
     }
 
 }
